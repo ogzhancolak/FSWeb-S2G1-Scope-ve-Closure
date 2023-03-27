@@ -46,12 +46,22 @@ function skorArtirici() {
 
 const skor1 = skorArtirici();
 
+console.log(skor1());
+
+/*
+  skor1 fonksiyonu, fonksiyon içinde fonksiyon çağırarak tasarlanmıştır ama skor2 fonksiyonunda variable fonksiyonun dışında kalarak sadece arttırma olacağı zaman 
+  fonksiyon çağırılır ve console'a yazdırılır. skor1'de closure kullanılmaktadır, fonksiyon içinde fonksiyon tasarlayarak yazılmıştır.
+*/
+
 // skor2 kodları
 let skor = 0;
 
 function skor2() {
   return skor++;
 }
+
+console.log(skor2());
+
 
 
 /* Görev 2: takimSkoru() 
@@ -64,11 +74,14 @@ Aşağıdaki takimSkoru() fonksiyonununda aşağıdakileri yapınız:
 Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyonu olarak da kullanılacak
 */
 
-function takimSkoru(/*Kodunuzu buraya yazınız*/){
-    /*Kodunuzu buraya yazınız*/
+function takimSkoru(){
+  
+  return Math.floor(Math.random() * 16) + 10;
+  
+  
 }
 
-
+console.log(takimSkoru());
 
 
 /* Görev 3: macSonucu() 
@@ -86,11 +99,23 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
 }
 */ 
 
-function macSonucu(/*Kodunuzu buraya yazınız*/){
-  /*Kodunuzu buraya yazınız*/
+function macSonucu(callback, ceyrekSayisi){
+  var evSahibiSkor = 0;
+  var konukTakimSkor = 0;
+  for (var i = 0; i < ceyrekSayisi; i++) {
+    var evSahibiCeyrekSkoru = callback();
+    var konukTakimCeyrekSkoru = callback();
+    evSahibiSkor += evSahibiCeyrekSkoru;
+    konukTakimSkor += konukTakimCeyrekSkoru;
+    console.log('Çeyrek ' + (i + 1) + ' skoru: ' + evSahibiCeyrekSkoru + '-' + konukTakimCeyrekSkoru);
+  }
+  return {
+    'EvSahibi': evSahibiSkor,
+    'KonukTakim': konukTakimSkor
+  };
 }
 
-
+console.log(macSonucu(takimSkoru,4))
 
 
 
@@ -103,17 +128,23 @@ Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
   
 Örneğin: periyotSkoru(takimSkoru) çalıştırınca aşağıdaki object'i dönmeli
 {
-  "EvSahibi": 18,
+  "EvSahibi": 18
   "KonukTakim": 12
 }
-  */
 
+*/
 
-function periyotSkoru(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
+function periyotSkoru(callback) {
 
+  const EvSahibiSkoru = callback('EvSahibi');
+  const KonukTakimSkoru = callback('KonukTakim');
+  return {
+    EvSahibi: EvSahibiSkoru,
+    KonukTakim: KonukTakimSkoru
+  }  
 }
 
+console.log(periyotSkoru(takimSkoru));
 
 /* Zorlayıcı Görev 5: skorTabelasi() 
 Aşağıdaki skorTabelasi() fonksiyonunu kullanarak aşağıdakileri yapınız:
